@@ -104,7 +104,7 @@ public class Main {
             System.out.println(inserted);
             if (inserted > 0) {
                 System.out.println("A new student was inserted successfully!");
-                System.out.println("ID : "+student.getId()+" Name : "+student.getName()+" Phone Number : "+student.getPhoneNumber()+ " From Class : "+student.getClassName());
+                System.out.println(" Name : "+student.getName()+" Phone Number : "+student.getPhoneNumber()+ " From Class : "+student.getClassName());
             }
 
         } catch (SQLException e) {
@@ -176,14 +176,21 @@ public class Main {
                         System.out.print("Enter student name : ");
                         scanner.nextLine();
                         student.setName(scanner.nextLine());
+                        boolean isPhoneNumberValid = false;
+                        do {
+                            System.out.println("Enter phone number : ");
+                            try {
+                                student.setPhoneNumber(scanner.nextInt());
+                                isPhoneNumberValid = true;
 
-                        System.out.println("Enter phone number : ");
-                        try {
+                            }catch (Exception e){
+                                System.out.println(e.getMessage());
+                                System.out.println("Please enter integer only");
+                                scanner.nextLine(); // to prevent infinite loop
 
-                        }catch (Exception e){
-                            System.out.println(e.getMessage());
-                        }
-                        student.setPhoneNumber(scanner.nextInt());
+                            }
+
+                        }while (!isPhoneNumberValid);
                         scanner.nextLine();
                         System.out.println("Enter class : ");
                         student.setClassName(scanner.nextLine());
@@ -200,33 +207,93 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("-----| Delete Student |-----");
-                    System.out.println("Enter the id : ");
-                    student.setId(scanner.nextInt());
-                    deleteStudentById(student);
+
+
+
+                    boolean isValid = false;
+                    do {
+                        System.out.println("Enter the id : ");
+                        try {
+                            student.setId(scanner.nextInt());
+                            deleteStudentById(student);
+                            isValid = true;
+
+                        }catch (Exception e){
+                            System.out.println(e.getMessage());
+                            System.out.println("Please enter integer only");
+                            scanner.nextLine(); // to prevent infinite loop
+
+                        }
+
+
+                    }while (!isValid);
                     pressEnterKey();
                     break;
                 case 4:
                     System.out.println("----| update student |-----");
-                    System.out.println("Enter the id : ");
-                    student.setId(scanner.nextInt());
+//                    System.out.println("Enter the id : ");
+//
+//                    student.setId(scanner.nextInt());
+                    boolean isValidNum = false;
+                    do {
+                        System.out.println("Enter the id : ");
+                        try {
+                            student.setId(scanner.nextInt());
+
+                            isValidNum = true;
+
+                        }catch (Exception e){
+                            System.out.println(e.getMessage());
+                            System.out.println("Please enter integer only");
+                            scanner.nextLine(); // to prevent infinite loop
+
+                        }
+                    }while (!isValidNum);
                     System.out.println("Enter new name : ");
                     scanner.nextLine();
                     student.setName(scanner.nextLine());
+                    boolean isPhoneNumberValid = false;
+                    do {
+                        System.out.println("Enter phone number : ");
+                        try {
+                            student.setPhoneNumber(scanner.nextInt());
+                            isPhoneNumberValid = true;
 
-                    System.out.println("Enter new phone number : ");
-                    student.setPhoneNumber(scanner.nextInt());
+                        }catch (Exception e){
+                            System.out.println(e.getMessage());
+                            System.out.println("Please enter integer only");
+                            scanner.nextLine(); // to prevent infinite loop
+
+                        }
+
+                    }while (!isPhoneNumberValid);
+
                     scanner.nextLine();
                     System.out.println("Enter new class");
                     student.setClassName(scanner.nextLine());
-
                     updateStudent(student);
                     pressEnterKey();
 
                     break;
                 case 5:
                     System.out.println("select by id ");
-                    System.out.println("Enter id  : ");
-                    student.setId(scanner.nextInt());
+
+                    boolean isValidId = false;
+                    do {
+                        System.out.println("Enter the id : ");
+                        try {
+                            student.setId(scanner.nextInt());
+
+                            isValidId = true;
+
+                        }catch (Exception e){
+                            System.out.println(e.getMessage());
+                            System.out.println("Please enter integer only");
+                            scanner.nextLine(); // to prevent infinite loop
+
+                        }
+                    }while (!isValidId);
+
                     selectById(student);
                     pressEnterKey();
                     break;
