@@ -1,12 +1,21 @@
 package model;
 
-import java.sql.Date;
-
 public class Student {
     private Integer id;
-    private String name ;
+    private String name;
     private Integer phoneNumber;
     private String className;
+
+    public Student() {
+    }
+
+    public Student(Integer id, String name, Integer phoneNumber, String className) {
+        this.id = id;
+        this.name = name;
+
+        this.phoneNumber = phoneNumber;
+        this.className = className;
+    }
 
     public Integer getId() {
         return id;
@@ -23,6 +32,7 @@ public class Student {
     public void setName(String name) {
         this.name = name;
     }
+
     public Integer getPhoneNumber() {
         return phoneNumber;
     }
@@ -36,17 +46,6 @@ public class Student {
     }
 
     public void setClassName(String className) {
-        this.className = className;
-    }
-
-    public Student() {
-    }
-
-    public Student(Integer id, String name,  Integer phoneNumber, String className) {
-        this.id = id;
-        this.name = name;
-
-        this.phoneNumber = phoneNumber;
         this.className = className;
     }
 

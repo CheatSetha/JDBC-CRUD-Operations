@@ -1,6 +1,5 @@
 import JDBC.JdbcImp;
 import model.Student;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,12 +15,11 @@ public class Main {
         System.out.println("press enter to continue!");
         scanner.nextLine();
     }
-
     private static void selectAllStudent() {
         //load and register driver class
         try (Connection connection = jdbcImp.dataSource().getConnection()) {
             //create statement object
-            String selectSql = "SELECT * FROM student";
+            String selectSql = "SELECT * FROM student ORDER BY id ASC ";
             connection.prepareStatement(selectSql);
             PreparedStatement statement = connection.prepareStatement(selectSql);
             statement.executeQuery();
@@ -93,6 +91,7 @@ public class Main {
 
     private static void insertStudent(Student student) {
         try (Connection connection = jdbcImp.dataSource().getConnection()) {
+            //create sql statement
             String insertSql = "INSERT INTO student (name,  phone_number, class_name) VALUES (?,?,?) ";
             PreparedStatement statement = connection.prepareStatement(insertSql);
             statement.setString(1, student.getName());
@@ -100,10 +99,12 @@ public class Main {
             statement.setInt(2, student.getPhoneNumber());
 
             statement.setString(3, student.getClassName());
+            //send execute sql query
             int inserted = statement.executeUpdate();
             System.out.println(inserted);
             if (inserted > 0) {
                 System.out.println("A new student was inserted successfully!");
+                System.out.println("ID : "+student.getId()+" Name : "+student.getName()+" Phone Number : "+student.getPhoneNumber()+ " From Class : "+student.getClassName());
             }
 
         } catch (SQLException e) {
@@ -113,24 +114,24 @@ public class Main {
     }
 
     private static void updateStudent(Student student) {
-        Scanner scanner = new Scanner(System.in);
+
         try (Connection connection = jdbcImp.dataSource().getConnection()) {
-//            System.out.print("Enter the id -> ");
-//            int tempId = scanner.nextInt();
             String updateStudent = "UPDATE student SET name = ? ,phone_number = ? , class_name = ? WHERE id =  ?";
             PreparedStatement statement = connection.prepareStatement(updateStudent);
-
-
+            //set what user have inputed
             statement.setString(1, student.getName());
             statement.setInt(2, student.getPhoneNumber());
             statement.setString(3, student.getClassName());
             statement.setInt(4, student.getId());
+            //send and execute
             statement.executeUpdate();
+            //process result
             int sUpdate = statement.executeUpdate();
             if (sUpdate > 0) {
                 System.out.println("student updated!");
-            }
+                System.out.println("ID : "+student.getId()+" Name : "+student.getName()+" Phone Number : "+student.getPhoneNumber()+ " From Class : "+student.getClassName());
 
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -143,7 +144,7 @@ public class Main {
             PreparedStatement statement = connection.prepareStatement(deleteSqlById);
             statement.setInt(1, student.getId());
             int deletedId = statement.executeUpdate();
-            System.out.println(deletedId + "was deleted!");
+            System.out.println(student.getId() + " was deleted!");
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -177,6 +178,11 @@ public class Main {
                         student.setName(scanner.nextLine());
 
                         System.out.println("Enter phone number : ");
+                        try {
+
+                        }catch (Exception e){
+                            System.out.println(e.getMessage());
+                        }
                         student.setPhoneNumber(scanner.nextInt());
                         scanner.nextLine();
                         System.out.println("Enter class : ");
